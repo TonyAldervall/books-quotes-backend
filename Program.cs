@@ -40,7 +40,18 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+var env = builder.Environment.EnvironmentName;
+
+if (env == "Production")
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("ProductionConnection")));
+
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+
 
 builder.Services.AddAuthentication(options =>
 {
