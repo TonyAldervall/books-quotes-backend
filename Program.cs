@@ -45,7 +45,6 @@ var env = builder.Environment.EnvironmentName;
 if (env == "Production")
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("ProductionConnection")));
-
 }
 else
 {
