@@ -91,22 +91,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    try
-    {
-        dbContext.Database.Migrate();
-        Console.WriteLine("Database migrations run successfully!");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error while migrating: {ex.Message}");
-        throw;
-    }
-}
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

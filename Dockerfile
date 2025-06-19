@@ -11,6 +11,11 @@ RUN dotnet publish -c Release -o out
 # Körsteget
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app/out .
 
-ENTRYPOINT ["dotnet", "WebAPI.dll"]
+COPY --from=build /app/out ./
+
+# Kopiera entrypoint-scriptet till containern
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
